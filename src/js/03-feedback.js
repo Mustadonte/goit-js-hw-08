@@ -4,7 +4,7 @@ const refs = {
   form: document.querySelector('.feedback-form'),
 };
 const INPUT_FORM = 'feedback-form-state';
-let dataObj = localStorage.getItem(INPUT_FORM) ?? {};
+let dataObj = localStorage.getItem(INPUT_FORM);
 
 refs.form.addEventListener('input', throttle(setDataToLocalStorage, 500));
 refs.form.addEventListener('submit', handleSubmit);
@@ -21,14 +21,15 @@ function setDataToLocalStorage() {
 }
 
 function updateForm() {
-  if (dataObj.toString !== false) {
-    try {
-      savedData = JSON.parse(dataObj);
-      const { elements } = refs.form;
-      const keys = Object.keys(savedData);
-      keys.forEach(key => (elements[key].value = savedData[key]));
-    } catch (error) {}
+  if (!localStorage.getItem(INPUT_FORM)) {
+    return;
   }
+  try {
+    savedData = JSON.parse(dataObj);
+    const { elements } = refs.form;
+    const keys = Object.keys(savedData);
+    keys.forEach(key => (elements[key].value = savedData[key]));
+  } catch (error) {}
 }
 
 function handleSubmit(e) {
