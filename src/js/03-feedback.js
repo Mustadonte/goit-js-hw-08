@@ -9,6 +9,7 @@ let dataObj = localStorage.getItem(INPUT_FORM);
 refs.form.addEventListener('input', throttle(setDataToLocalStorage, 500));
 refs.form.addEventListener('submit', handleSubmit);
 
+addEventListener('DOMContentLoaded', checkForm);
 addEventListener('DOMContentLoaded', updateForm);
 
 function setDataToLocalStorage() {
@@ -20,10 +21,18 @@ function setDataToLocalStorage() {
   });
 }
 
-function updateForm() {
-  if (!localStorage.getItem(INPUT_FORM)) {
+function checkForm(e) {
+  if (!dataObj) {
     return;
+  } else {
+    storageData = JSON.parse(localStorage.getItem(INPUT_FORM));
+    const { elements } = refs.form;
+    elements.email.value = storageData.email;
+    elements.message.value = storageData.message;
   }
+}
+
+function updateForm() {
   try {
     savedData = JSON.parse(dataObj);
     const { elements } = refs.form;
