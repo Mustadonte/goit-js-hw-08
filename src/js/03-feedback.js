@@ -29,8 +29,10 @@ function checkForm(e) {
     try {
       savedData = JSON.parse(dataObj);
       const { elements } = refs.form;
-      const keys = Object.keys(savedData);
-      keys.forEach(key => (elements[key].value = savedData[key]));
+      elements.email.value = savedData.email;
+      elements.message.value = savedData.message;
+      // const keys = Object.keys(savedData);
+      // keys.forEach(key => (elements[key].value = savedData[key]));
     } catch (error) {}
   }
 }
