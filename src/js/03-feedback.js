@@ -10,7 +10,6 @@ refs.form.addEventListener('input', throttle(setDataToLocalStorage, 500));
 refs.form.addEventListener('submit', handleSubmit);
 
 addEventListener('DOMContentLoaded', checkForm);
-addEventListener('DOMContentLoaded', updateForm);
 
 function setDataToLocalStorage() {
   let formData = new FormData(refs.form);
@@ -23,22 +22,16 @@ function setDataToLocalStorage() {
 
 function checkForm(e) {
   if (!dataObj) {
+    console.log('Локал сторейдж пустий');
     return;
   } else {
-    storageData = JSON.parse(localStorage.getItem(INPUT_FORM));
-    const { elements } = refs.form;
-    elements.email.value = storageData.email;
-    elements.message.value = storageData.message;
+    try {
+      savedData = JSON.parse(dataObj);
+      const { elements } = refs.form;
+      const keys = Object.keys(savedData);
+      keys.forEach(key => (elements[key].value = savedData[key]));
+    } catch (error) {}
   }
-}
-
-function updateForm() {
-  try {
-    savedData = JSON.parse(dataObj);
-    const { elements } = refs.form;
-    const keys = Object.keys(savedData);
-    keys.forEach(key => (elements[key].value = savedData[key]));
-  } catch (error) {}
 }
 
 function handleSubmit(e) {
