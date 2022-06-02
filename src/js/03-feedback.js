@@ -25,6 +25,7 @@ function checkForm(e) {
     console.log('Локал сторейдж пустий');
     return;
   } else {
+    console.log(dataObj);
     try {
       savedData = JSON.parse(dataObj);
       const { elements } = refs.form;
