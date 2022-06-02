@@ -27,7 +27,7 @@ function checkForm(e) {
   } else {
     console.log(dataObj);
     try {
-      savedData = JSON.parse(dataObj);
+      let savedData = JSON.parse(dataObj);
       const { elements } = refs.form;
       elements.email.value = savedData.email;
       elements.message.value = savedData.message;
